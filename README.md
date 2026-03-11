@@ -85,7 +85,7 @@ The desktop GUI (CustomTkinter) enables CRUD (Create, Read, Update, Delete) mana
 ## 📂 Project Structure
 
 ```
-📦 stock-data-pipeline/
+📦 stock-analysis/
 ┣ 📁 scripts/
 ┃ ┣ 📜 main_guiM.py        ─ Modern GUI (CustomTkinter)
 ┃ ┣ 📜 main_guiC.py        ─ Classic GUI
@@ -115,8 +115,8 @@ The desktop GUI (CustomTkinter) enables CRUD (Create, Read, Update, Delete) mana
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/A-purv-Ai/stock-data-pipeline.git
-   cd stock-data-pipeline
+   git clone https://github.com/A-purv-Ai/stock-analysis.git
+   cd stock-analysis
    ```
 2. **Install dependencies**
    ```bash
