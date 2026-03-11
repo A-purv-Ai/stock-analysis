@@ -1,4 +1,4 @@
-# Stock Data Management App & Data-to-Visualization Pipeline
+# 10-Year Stock Performance Analysis: Data-Backed Investment Insights
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.x-lightgrey?logo=sqlite&logoColor=blue)](https://www.sqlite.org/index.html)
@@ -9,177 +9,144 @@
 ---
 
 ## Overview
-A hands-on project covering **feature engineering**, **data analysis**, and **data engineering**. Fetch, manage, and visualize real stock data, then build insights and dashboards. Includes a custom feature (**Normalized Close**) to compare multiple stocks on the same scale.
 
-It also integrates:
-- **Desktop App (CustomTkinter)** for CRUD operations
-- **SQLite** database for local storage
-- **Pandas & CSV export** for data manipulation
-- **Tableau** for downstream visualization
+This project analyses **10 years of historical stock performance** (2014–2024) across four major equities — **MSFT, IBM, MS, and AAPL** — to answer a practical investment question:
 
-The workflow automates fetching historical stock data from **Yahoo Finance** (MSFT, IBM, AAPL, MS) and creates a **data-to-visualization pipeline**.
+> *Which stock offered the safest and most consistent long-term return over the past decade?*
+
+**Finding:** Based on normalised return analysis and volatility profiling, **Apple (AAPL)** demonstrated the strongest and most consistent long-term risk-adjusted performance across the study period.
+
+The analysis pipeline covers end-to-end data work: automated data acquisition from Yahoo Finance, structured storage in SQLite, feature engineering (custom **Normalized Close** metric), and audience-specific **Tableau** dashboards for both executive and managerial views.
 
 ---
 
-## Features
-- 🖥️ **Modern GUI** with CustomTkinter
-- 🔄 **Full CRUD Operations** (Create, Read, Update, Delete)
-- 📥 **Automated Data Fetch** from Yahoo Finance
-- 🗄️ **SQLite database** with duplicate prevention
-- 📤 **CSV Export** for Tableau or other analysis tools
-- ⚡ **Classic & Modern GUI** support (`main_guiC.py` / `main_guiM.py`)
+## The Analytical Question
+
+Traditional stock comparison using raw closing prices is misleading — stocks trade at different price scales, making direct comparison impossible. This project addresses that by engineering a **Normalized Close** feature that rebases all stocks to a common starting value (2014 = 1.0), enabling true like-for-like performance comparison across the full decade.
+
+---
+
+## Key Finding
+
+After analysing normalised 10-year price trajectories and annual trading volumes:
+
+- **Apple (AAPL)** showed the highest and most consistent compounding growth with lower relative drawdowns compared to peers
+- **MSFT** showed strong growth but with higher volatility in specific periods
+- **IBM** underperformed significantly over the decade — a cautionary data point for long-term holds
+- **Morgan Stanley (MS)** showed cyclical patterns tied to broader financial sector movements
+
+These findings were presented through two Tableau dashboards — an **Executive Overview** (high-level annual trends) and a **Managerial Overview** (granular quarterly volume and normalised price trends).
+
+---
+
+## 📊 Data Visualizations
+
+🖼️ **Stocks' Relative Performance Over the Last Decade**
+[![Stocks' Relative Performance Over the Last Decade](images/Stocks_Relative_Performance.png)](images/Stocks_Relative_Performance.png)
+Normalised closing price evolution for MSFT, IBM, MS, and AAPL — rebased to 1.0 at start of 2014 for true same-scale comparison using the custom **Normalized Close** feature.
+
+🖼️ **Stocks Daily Closing Price Trend**
+[![Stocks Daily Closing Price Trend](images/Stocks_Closing_Price_Trend.png)](images/Stocks_Closing_Price_Trend.png)
+Raw daily closing price evolution, revealing absolute price movements and volatility across all four tickers.
+
+🖼️ **Executive Overview Dashboard**
+[![Executive Overview Dashboard](images/Executive_Overview_Story.png)](images/Executive_Overview_Story.png)
+Combined normalised stock performance and annual trading volume for MSFT, IBM, MS, and AAPL (2014–2024) — designed for strategic, high-level review.
+
+🖼️ **Managerial Overview Dashboard**
+[![Managerial Overview Dashboard](images/Managerial_Overview_Dashboard.png)](images/Managerial_Overview_Dashboard.png)
+Granular quarterly traded volume alongside normalised price trends — designed for operational and managerial review.
+
 ---
 
 ## Tech Stack
-| Category         | Tools / Libraries |
-|:-----------------|:------------------|
-| Frontend GUI     | CustomTkinter     |
-| Backend Database | SQLite3           |
-| Data Fetching    | yfinance          |
-| Data Handling    | Pandas            |
-| Visualization    | Tableau           |
-| Environment      | Python 3.11+      |
+
+| Category         | Tools / Libraries         |
+|:-----------------|:--------------------------|
+| Data Acquisition | yfinance (Yahoo Finance)  |
+| Data Handling    | Pandas, SQLite3           |
+| Feature Engineering | Custom Normalized Close metric |
+| Visualization    | Tableau                   |
+| GUI Application  | CustomTkinter             |
+| Environment      | Python 3.11+              |
 
 ---
 
-## ⚙️ Installation & Usage
+## Data-to-Insight Flow
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/A-purv-Ai/stock-data-pipeline.git
-    cd stock-data-pipeline
-    ```
-2.  **Install dependencies**
-    ```bash
-    pip install customtkinter yfinance pandas
-    ```
-3.  **Run the modern GUI**
-    ```bash
-    python main_guiM.py
-    ```
-    *(Alternatively, run `python main_guiC.py` for the classic version.)*
+```
+Yahoo Finance API → Python (yfinance + pandas) → SQLite DB → CSV Export → Tableau Dashboard
+```
 
-4.  **Inspect the database**
-    - Open `database/stocks.db` using a tool like **DB Browser for SQLite** to check data operations.
-    - Verify that data insertion and other CRUD operations from the GUI are working correctly.
+The desktop GUI (CustomTkinter) enables CRUD (Create, Read, Update, Delete) management of the tracked ticker list, making it easy to add or remove stocks and re-run the pipeline on demand.
 
-5.  **Export & Visualize**
-    - Run the export script to generate a CSV file from the database.
-      ```bash
-      python export_csv.py
-      ```
-    - Import the resulting `database/stock_data_export.csv` file into **Tableau** to create dashboards.
-
-
+---
 
 ## 📂 Project Structure
+
 ```
 📦 stock-data-pipeline/
 ┣ 📁 scripts/
-┃ ┣ 📜 main_guiM.py ─ Modern GUI (CustomTkinter)
-┃ ┣ 📜 main_guiC.py ─ Classic GUI
-┃ ┣ 📜 db_utils.py ─ Database utilities
-┃ ┣ 📜 import_yahoo.py ─ Automated Yahoo Finance importer
-┃ ┣ 📜 export_csv.py ─ CSV export script
-┃ ┣ 📜 insert_window.py ─ GUI for adding data
-┃ ┣ 📜 delete_window.py ─ GUI for deleting data
-┃ ┣ 📜 select_window.py ─ GUI for selecting data
-┃ ┗ 📜 update_window.py ─ GUI for updating data
+┃ ┣ 📜 main_guiM.py        ─ Modern GUI (CustomTkinter)
+┃ ┣ 📜 main_guiC.py        ─ Classic GUI
+┃ ┣ 📜 db_utils.py         ─ Database utility functions (CRUD)
+┃ ┣ 📜 import_yahoo.py     ─ Yahoo Finance automated importer
+┃ ┣ 📜 export_csv.py       ─ CSV export script
+┃ ┣ 📜 insert_window.py    ─ GUI: add ticker
+┃ ┣ 📜 delete_window.py    ─ GUI: delete record
+┃ ┣ 📜 select_window.py    ─ GUI: view records
+┃ ┗ 📜 update_window.py    ─ GUI: update entry
 ┣ 📁 images/
 ┃ ┣ 🖼️ Executive_Overview_Story.png
 ┃ ┣ 🖼️ Stocks_Relative_Performance.png
 ┃ ┣ 🖼️ Stocks_Closing_Price_Trend.png
 ┃ ┗ 🖼️ Managerial_Overview_Dashboard.png
 ┣ 📁 database/
-┃ ┣ 🗄️ stocks.db ─ SQLite database
-┃ ┣ 📄 stock_data_export.csv ─ Exported CSV (analysis/Tableau)
+┃ ┣ 🗄️ stocks.db               ─ SQLite database
+┃ ┣ 📄 stock_data_export.csv    ─ Exported CSV for Tableau
 ┃ ┗ 🗄️ stocks DB Browser.sqpro ─ (Optional) DB Browser session
-┣ 📜 README.md ─ Project documentation
+┣ 📜 README.md
 ┗ (other project files)
 ```
-## 📜 Python Scripts
-
-Below are the main Python scripts included in this project:
-
-| 📜 Script              | Description                                             |
-|------------------------|--------------------------------------------------------|
-| `main_guiM.py`         | Modern GUI for stock data operations (CustomTkinter)   |
-| `main_guiC.py`         | Classic-style GUI for stock management                 |
-| `db_utils.py`          | Database utility functions (CRUD)                      |
-| `import_yahoo.py`      | Importer for Yahoo Finance historical data             |
-| `export_csv.py`        | Export stock data from SQLite DB to CSV                |
-| `insert_window.py`     | GUI to insert new stock data                           |
-| `delete_window.py`     | GUI to delete database records                         |
-| `select_window.py`     | GUI to select/view records                             |
-| `update_window.py`     | GUI to update database entries                         |
-
 
 ---
 
-## 📂 Data Files
+## ⚙️ Installation & Usage
 
-| 🗄️ File                              | Description                                 |
-|--------------------------------------|---------------------------------------------|
-| `database/stocks.db`                 | SQLite database of stock records            |
-| `database/stock_data_export.csv`     | CSV export for analysis/Tableau             |
-| `database/stocks DB Browser.sqpro`   | (Optional) DB Browser session file          |
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/A-purv-Ai/stock-data-pipeline.git
+   cd stock-data-pipeline
+   ```
+2. **Install dependencies**
+   ```bash
+   pip install customtkinter yfinance pandas
+   ```
+3. **Run the modern GUI**
+   ```bash
+   python main_guiM.py
+   ```
+   *(Alternatively, run `python main_guiC.py` for the classic version.)*
 
-
----
-
-## 📊 Data Visualizations
-
-🖼️ **Stocks Daily Closing Price Trend**  
-[![Stocks Daily Closing Price Trend](images/Stocks_Closing_Price_Trend.png)](images/Stocks_Closing_Price_Trend.png)  
-Daily closing price evolution for MSFT, IBM, MS, and AAPL, revealing volatility and movement.
-
-🖼️ **Stocks' Relative Performance Over the Last Decade**  
-[![Stocks' Relative Performance Over the Last Decade](images/Stocks_Relative_Performance.png)](images/Stocks_Relative_Performance.png)  
-Line chart showing how each stock's price changed relative to its starting value (2014 = 1.0) using a custom engineered feature (**Normalized Close**) for same-scale comparison across tickers.
-
-🖼️ **Managerial Overview Dashboard**  
-[![Managerial Overview Dashboard](images/Managerial_Overview_Dashboard.png)](images/Managerial_Overview_Dashboard.png)  
-Normalized price trends and quarterly traded volume for the four major stocks—granular executive/managerial view.
-
-🖼️ **Executive Overview Dashboard**  
-[![Executive Overview Dashboard](images/Executive_Overview_Story.png)](images/Executive_Overview_Story.png)  
-Combined stock performance and annual trading volume for MSFT, IBM, MS, and AAPL (normalized closing prices and yearly volume, 2014–2024).
-
----
-## 🔁 Quick Reference Table
-
-| Step        | Purpose                                | 📜 File / 🛠️ Tool           |
-|-------------|----------------------------------------|------------------------------|
-| 1           | Launch modern GUI                      | `scripts/main_guiM.py`       |
-| 2           | Manage DB & CRUD ops                   | `scripts/db_utils.py`, `database/stocks.db`|
-| 3           | Import Yahoo data                      | `scripts/import_yahoo.py`    |
-| 4           | Export to CSV                          | `scripts/export_csv.py`      |
-| 5           | Build Tableau dashboard                | Tableau Desktop              |
-
-
-<!--
-Alignment markers guide:
-:----: → center align
-:----  → left align
-----:  → right align
--->
----
-
-## Data-to-Visualization Flow
-Yahoo Finance API → SQLite DB → CustomTkinter App (CRUD) → CSV Export → Tableau Dashboard
-
+4. **Export to CSV for Tableau**
+   ```bash
+   python export_csv.py
+   ```
+   Import `database/stock_data_export.csv` into Tableau to reproduce the dashboards.
 
 ---
 
 ## 🔮 Future Enhancements
-- Interactive charts inside the GUI
-- Data filtering, sorting, and search functionality
-- Multi-user support & authentication
-- Executable build (`.exe` or `.app`) for easy distribution
+
+- Add risk metrics: Sharpe Ratio, max drawdown, rolling volatility
+- Expand ticker universe beyond 4 stocks
+- Integrate live price feeds for real-time dashboard refresh
+- Build a Streamlit web app for browser-based interactive exploration
 
 ---
 
 ## 👤 Author
+
 **Apurva Upadhyay**
 *Data Analytics | Data Science | AI Engineering*
 
@@ -191,4 +158,4 @@ Yahoo Finance API → SQLite DB → CustomTkinter App (CRUD) → CSV Export → 
 
 ## 🏷️ Keywords
 
-Financial Analytics · Python · Data Pipeline · CustomTkinter · SQLite · Pandas · Yahoo Finance · Tableau · Data Visualization · Stock Analysis · Desktop GUI · CRUD Application · End-to-End Solution · Dashboard 
+Financial Analytics · Equity Analysis · Investment Analysis · Python · Pandas · Feature Engineering · Normalized Close · SQLite · Yahoo Finance · Tableau · Data Visualization · Stock Performance · Long-Term Returns · Dashboard · End-to-End Data Pipeline
