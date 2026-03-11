@@ -14,8 +14,6 @@ This project analyses **10 years of historical stock performance** (2014–2024)
 
 > *Which stock offered the safest and most consistent long-term return over the past decade?*
 
-**Finding:** Based on normalised return analysis and volatility profiling, **Apple (AAPL)** demonstrated the strongest and most consistent long-term risk-adjusted performance across the study period.
-
 The analysis pipeline covers end-to-end data work: automated data acquisition from Yahoo Finance, structured storage in SQLite, feature engineering (custom **Normalized Close** metric), and audience-specific **Tableau** dashboards for both executive and managerial views.
 
 ---
@@ -26,16 +24,26 @@ Traditional stock comparison using raw closing prices is misleading — stocks t
 
 ---
 
-## Key Finding
+## 📈 Results
 
-After analysing normalised 10-year price trajectories and annual trading volumes:
+### Normalised 10-Year Returns (2014 baseline = 1.0×)
 
-- **Apple (AAPL)** showed the highest and most consistent compounding growth with lower relative drawdowns compared to peers
-- **MSFT** showed strong growth but with higher volatility in specific periods
-- **IBM** underperformed significantly over the decade — a cautionary data point for long-term holds
-- **Morgan Stanley (MS)** showed cyclical patterns tied to broader financial sector movements
+| Stock | Final Normalised Return | Interpretation |
+|:------|:------------------------|:---------------|
+| **MSFT** | **15.03×** | ~15× its 2014 value |
+| **AAPL** | **15.00×** | ~15× its 2014 value |
+| **MS** | **5.77×** | ~5.8× its 2014 value |
+| **IBM** | **2.12×** | ~2.1× its 2014 value — clear underperformer |
 
-These findings were presented through two Tableau dashboards — an **Executive Overview** (high-level annual trends) and a **Managerial Overview** (granular quarterly volume and normalised price trends).
+### Key Observations
+
+- **AAPL and MSFT are near-tied on raw return** — MSFT edges AAPL by a marginal 0.03× (15.03 vs 15.00) over the full decade. On raw terminal return alone, neither stock is a clear winner.
+- **AAPL's distinguishing edge lies elsewhere:** its pre-2020 growth trajectory was smoother and more consistent than MSFT's, it dominated trading volume throughout the decade (peak annual volumes up to ~60B shares), and its normalised price line showed lower relative drawdowns during the March 2020 COVID crash.
+- **MSFT** matched AAPL's terminal return but with higher volatility in specific periods, reflecting the broader re-rating of its cloud business (Azure) post-2018.
+- **Morgan Stanley (MS)** returned ~5.77× — respectable, but well behind the two tech leaders. Its trajectory shows cyclical patterns tied to financial sector macro movements.
+- **IBM** was the clear underperformer at only 2.12× over 10 years — barely outpacing inflation and serving as a cautionary data point for long-hold equity selection.
+- **March 2020 COVID Crash** is visible as a sharp dip across all four tickers, followed by a strong recovery — most pronounced in AAPL and MSFT, less so in IBM.
+- **AAPL trading volume** declined over the period (from ~60B in 2014 to ~5–10B by 2024), reflecting price appreciation — fewer shares are needed to represent the same dollar value, a healthy sign of compounding value growth.
 
 ---
 
